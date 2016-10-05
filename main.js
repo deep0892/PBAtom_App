@@ -1,6 +1,6 @@
 
 const electron = require('electron')
-const ipc = require('electron').ipcMain;
+const ipc = electron.ipcMain;
 // Module to control application life.
 const app = electron.app
 const path = require('path');
@@ -28,7 +28,7 @@ function createWindow () {
   
   //Added by Deepankar
   mainWindow.webContents.on('did-finish-load', () => {
-		mainWindow.webContents.executeJavaScript('new Notification("Hello!", {content: "Notification world!"})');
+		//mainWindow.webContents.executeJavaScript('new Notification("Hello!", {content: "Notification world!"})');
 	});
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
@@ -36,8 +36,8 @@ function createWindow () {
   //Deepankar
   // Listen for notification events.
 	ipc.on('notification-shim', (e, msg) => {
-		console.log(`Title: ${msg.title}, Content: ${msg.options.content}`);
-    e.sender.send('notification-shim-demo-event', 'Hello to you too!');
+		console.log(`Title: ${msg.title},X: ${msg.options.body},y: ${msg.options}`);
+    //e.sender.send('notification-shim-demo-event', 'Hello to you too!');
 	});
   //Deepankar
 
