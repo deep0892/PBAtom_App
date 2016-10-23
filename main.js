@@ -1,10 +1,9 @@
-
+require('events').EventEmitter.prototype._maxListeners = 0;
 const electron = require('electron')
 const ipc = electron.ipcMain;
-// Module to control application life.
+const {ipcMain} = require('electron')
 const app = electron.app
 const path = require('path');
-// Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -12,33 +11,43 @@ const BrowserWindow = electron.BrowserWindow
 let mainWindow
 
 function createWindow () {
-  // Create the browser window.
-  //mainWindow = new BrowserWindow({width: 800, height: 600})
-
+  
   mainWindow = new BrowserWindow({width: 800, height: 600,
     webPreferences: {
 			// Load `electron-notification-shim` in rendering view.
-			preload: path.join(__dirname, 'browser.js')
+			//preload: path.join(__dirname, './browser/browser.js')
 		}
     });
 
   // and load the index.html of the app.
-  //mainWindow.loadURL(`file://${__dirname}/index.html`)
-  mainWindow.loadURL(`https://web.whatsapp.com/`)
+  mainWindow.loadURL(`file://${__dirname}/index.html`)
+  //mainWindow.loadURL(`https://web.whatsapp.com/`)
   
   //Added by Deepankar
   mainWindow.webContents.on('did-finish-load', () => {
+    console.log(' mainwindow cleadid-finish-load');
 		//mainWindow.webContents.executeJavaScript('new Notification("Hello!", {content: "Notification world!"})');
 	});
+
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
-  
+
   //Deepankar
   // Listen for notification events.
 	ipc.on('notification-shim', (e, msg) => {
-		console.log(`Title: ${msg.title},X: ${msg.options.body},y: ${msg.options}`);
+		console.log(`Title: ${msg.title},Msg: ${msg.options.body}`);
     //e.sender.send('notification-shim-demo-event', 'Hello to you too!');
+    mainWindow.webContents.send('ping', msg.options.body)
 	});
+  
+      ipcMain.on('asynchronous-message', (event, arg) => {
+        console.log('main.js')  // prints "ping"
+        event.sender.send('asynchronous-reply', 'pong')
+     })
+  ipcMain.on('synchronous-message', (event, arg) => {
+  console.log(arg)  // prints "ping"
+  event.returnValue = 'pong'
+  })
   //Deepankar
 
   // Emitted when the window is closed.
