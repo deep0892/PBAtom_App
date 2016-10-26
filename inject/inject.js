@@ -1,3 +1,4 @@
+
 'use strict';
 require('electron-notification-shim')();
 const {ipcRenderer} = require('electron')
@@ -109,20 +110,3 @@ function verify_unread()
     last_unread = unread;
   }
 }
-
-
-
-
-
-
-// __myYoutubeTools={
-//     getMP: function(){
-//         return document.getElementById('pane-side')
-//     }
-//     ,pauseVideo: function(){
-//         alert('inject.js called pauseVideo')
-//         document.getElementsByClassName("input")[1].innerHTML="Hiiiiiiiii" // Fills the text box message
-//         var input = document.getElementsByClassName("icon btn-icon icon-send send-container")//Grabs the send button
-//         input[0].click();// Clicks the send button
-//     }
-// }

@@ -48,6 +48,7 @@ function createWindow () {
   ipcMain.on('synchronous-message', (event, arg) => {
     console.log(arg)  // prints "ping"
     event.returnValue = 'pong'
+
   })
   //Deepankar
 
