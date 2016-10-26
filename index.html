@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using node <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+
+    <div id="controls">
+            <button id="pause" title="Pause Video">||</button>
+            <button id="play" title="Start Video">&#9658;</button>
+            <button id="pauseNstart" title="Pause N Start">||&#9658;</button>
+    </div>
+
+    <!--<div id=divWebViewCont style="width:640px; height:480px">
+            <webview src="https://web.whatsapp.com/" preload="./inject/inject.js" partition="persist:whatsapp" style="width:640px; height:480px"></webview>
+    </div>-->
+
+    <webview id="foo" src="https://web.whatsapp.com/" preload="./inject/inject.js"  style="display:inline-flex; width:640px; height:480px" disablewebsecurity nodeintegration></webview>
+    <!--<webview id="foo1" src="https://web.whatsapp.com/"   style="display:inline-flex; width:640px; height:480px" disablewebsecurity nodeintegration></webview>-->
+    <!--<webview id="foo2" src="https://web.whatsapp.com/"   style="display:inline-flex; width:640px; height:480px" disablewebsecurity  nodeintegration></webview>-->-->
+
+  </body>
+  <script>
+    require('./browser/renderer.js');    
+  </script>
+</html>
