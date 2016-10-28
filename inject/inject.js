@@ -23,12 +23,6 @@ window.addEventListener('message', function(e) {
   }
 });
 
-document.addEventListener("click", function (e) {
-    var search = document.getElementsByClassName("icon icon-search");
-    ipcRenderer.send('click event triggered', search);
-    // alert('click enter');
-});
-
 window.onload = function() {
   // observer created to detect changes in DOM (due to incoming message )
   init_observer = new MutationObserver(function(mutationRecords) {
@@ -77,7 +71,12 @@ window.onload = function() {
 //   (document.head||document.documentElement).appendChild(script);
 //   script.parentNode.removeChild(script);
 // }
-
+document.addEventListener("click", function (e) {
+    var search = document.getElementsByClassName("icon icon-search");
+    ipcRenderer.send('click event triggered', search);
+    // alert('click enter');
+});
+}
 function send_initialized()
 {
   if (!init_observer)

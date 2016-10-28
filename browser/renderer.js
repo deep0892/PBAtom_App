@@ -2,6 +2,9 @@
  const {ipcRenderer} = require('electron')
  
  ipcRenderer.on('click event triggered', (event, arg) => {
+     alert('click triggered');
+    var webview  = document.getElementById('foo'); 
+     webView.loadUrl("javascript:(function(){document.getElementByClassName('icon icon-search').click();})()");
     console.log('click event triggered' +arg )
     document.getElementsByClassName(arg).click();
 });
