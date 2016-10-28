@@ -23,7 +23,6 @@ function createWindow () {
 
   mainWindow.webContents.openDevTools()
 
-  
   // Listen for notification events.
 	ipc.on('notification-shim', (e, msg) => {
 		console.log(`Title: ${msg.title},Msg: ${msg.options.body}`);
@@ -33,13 +32,11 @@ function createWindow () {
   ipcMain.on('asynchronous-message', (event, arg) => {
       console.log('main.js');  // prints "ping"
       event.sender.send('asynchronous-reply', 'pong');
-  })
-  //Deepankar
+  });
 
-  // Emitted when the window is closed.
   mainWindow.on('closed', function () {
-    mainWindow = null;
-  })
+    mainWindow = null
+  });
 }
 
 app.on('ready', createWindow)
