@@ -1,4 +1,3 @@
-
 'use strict';
 require('electron-notification-shim')();
 const {ipcRenderer} = require('electron')
@@ -8,11 +7,6 @@ var appwindow = null;
 var init_observer = null;
 var count_obser = null;
 var last_unread = 0;
-
-// ipcRenderer.on('message-received', (event, arg) => {
-//   onLoaded();
-
-// }) 
 
 window.addEventListener('message', function(e) {
   if (!appwindow)
@@ -27,6 +21,12 @@ window.addEventListener('message', function(e) {
   {
     appwindow.postMessage(e.data, '*');
   }
+});
+
+document.addEventListener("click", function (e) {
+    var search = document.getElementsByClassName("icon icon-search");
+    ipcRenderer.send('click event triggered', search);
+    // alert('click enter');
 });
 
 window.onload = function() {
@@ -80,7 +80,6 @@ function send_initialized()
 {
   if (!init_observer)
     return;
-
   appwindow.postMessage('initialized', '*');
   init_observer.disconnect();
   init_observer = null;
@@ -103,7 +102,6 @@ function unread_count()
 function verify_unread()
 {
   var unread = unread_count();
-
   if (last_unread != unread)
   {
     appwindow.postMessage({'unread': unread}, '*');

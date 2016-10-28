@@ -1,3 +1,6 @@
+'use strict';
+require('electron-notification-shim')();
+const {ipcRenderer} = require('electron')
 var startup = document.querySelector('#startup');
 var spinner = document.querySelector('*.spinner-container');
 var appwindow = null;
@@ -20,8 +23,7 @@ window.addEventListener('message', function(e) {
   }
 });
 
-function onLoaded()
-{
+window.onload = function() {
   init_observer = new MutationObserver(function(mutationRecords) {
     var favicon = document.querySelector('#favicon');
     for (var m in mutationRecords)
@@ -82,7 +84,6 @@ function unread_count()
 {
   var unread_elements = document.querySelectorAll('span.unread-count');
   var unread = 0;
-
   for (var i = 0; i < unread_elements.length; ++i)
   {
     var count = parseInt(unread_elements[i].textContent);
@@ -96,7 +97,6 @@ function unread_count()
 function verify_unread()
 {
   var unread = unread_count();
-
   if (last_unread != unread)
   {
     appwindow.postMessage({'unread': unread}, '*');
