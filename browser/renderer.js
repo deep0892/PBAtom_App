@@ -1,8 +1,3 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
-//  require('electron-notification-shim')();
- console.log('renderer.js called');
  var unread = 0;
  const remote = require('electron').remote;
  const Menu = remote.Menu;

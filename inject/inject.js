@@ -1,4 +1,3 @@
-
 'use strict';
 require('electron-notification-shim')();
 const {ipcRenderer} = require('electron')
@@ -9,10 +8,10 @@ var init_observer = null;
 var count_obser = null;
 var last_unread = 0;
 
-// ipcRenderer.on('message-received', (event, arg) => {
-//   onLoaded();
-
-// }) 
+//Listen to incoming channel
+ipcRenderer.on('message-received', (event, arg) => {
+}); 
+//Listen to incoming channel
 
 window.addEventListener('message', function(e) {
   if (!appwindow)
@@ -29,9 +28,12 @@ window.addEventListener('message', function(e) {
   }
 });
 
+//on load of webview element.
 window.onload = function() {
+  // observer created to detect changes in DOM (due to incoming message )
   init_observer = new MutationObserver(function(mutationRecords) {
     var favicon = document.querySelector('#favicon');
+    //traverse over mutations
     for (var m in mutationRecords)
     {
       var target = mutationRecords[m].target;
@@ -63,18 +65,18 @@ window.onload = function() {
   verify_unread();
 
   // Override default focus action with proper chrome action
-  var script = document.createElement('script');
-  script.textContent = '(' + function() {
-    var default_window_focus = window.focus;
-    window.focus = function() {
-      if (default_window_focus)
-        default_window_focus();
-      window.postMessage('focus', '*');
-    }
-  } + ')();';
-  (document.head||document.documentElement).appendChild(script);
-  script.parentNode.removeChild(script);
-}
+//   var script = document.createElement('script');
+//   script.textContent = '(' + function() {
+//     var default_window_focus = window.focus;
+//     window.focus = function() {
+//       if (default_window_focus)
+//         default_window_focus();
+//       window.postMessage('focus', '*');
+//     }
+//   } + ')();';
+//   (document.head||document.documentElement).appendChild(script);
+//   script.parentNode.removeChild(script);
+// }
 
 function send_initialized()
 {
